@@ -42,6 +42,7 @@ class Server:
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> (
             Dict)[str, int]:
         """Calculate deletion-resilient hypermedia pagination."""
+        index = 0 if index is None else index
         assert type(index) is int and type(page_size) is int
         assert 0 <= index < len(self.indexed_dataset())
         next_index = index
@@ -56,7 +57,7 @@ class Server:
         metrics = {
             "index": index,
             "next_index": next_index,
-            "page_size": page_size,
+            "page_size": len(data),
             "data": data,
         }
 
