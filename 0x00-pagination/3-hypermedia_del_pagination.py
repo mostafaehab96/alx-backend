@@ -51,7 +51,7 @@ class Server:
         for i in range(page_size):
             while not indexed_data.get(i):
                 next_index += 1
-            data.append(indexed_data[i])
+            data.append(indexed_data[next_index])
             next_index += 1
 
         metrics = {
