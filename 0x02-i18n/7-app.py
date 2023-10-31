@@ -3,6 +3,7 @@
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
+import pytz
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -48,7 +49,10 @@ def get_timezone():
     if g.user and g.user.timezone:
         return g.user.timezone
 
-    return app.config['BABEL_DEFAULT_TIMEZONE']
+    try:
+        return pytz.timezone(timezone).zone
+    except pytz.exceptions.UnknownTimeZoneError:
+        return app.config['BABEL_DEFAULT_TIMEZONE']
 
 
 def get_user():
