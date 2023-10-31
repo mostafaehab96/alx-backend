@@ -38,6 +38,19 @@ def get_locale() -> str:
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
+@babel.timezoneselector
+def get_timezone():
+    """Returns the appropriate time zone"""
+    timezone = request.args.get('timezone')
+    if timezone:
+        return timezone
+
+    if g.user and g.user.timezone:
+        return g.user.timezone
+
+    return app.config['BABEL_DEFAULT_TIMEZONE']
+
+
 def get_user():
     """Returns the user if exists"""
     user_id = request.args.get('login_as')
@@ -55,7 +68,7 @@ def before_request():
 @app.route("/")
 def hello() -> str:
     """Return hello world"""
-    return render_template("6-index.html")
+    return render_template("7-index.html")
 
 
 if __name__ == "__main__":
